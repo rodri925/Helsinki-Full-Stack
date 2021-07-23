@@ -1,0 +1,12 @@
+title Displaying New Note
+
+Browser->Server: HTTP POST new_note
+note over Server: Server receives new note, pushes it on to list of notes
+Server->Browser: Redirect and reload to notes page
+Browser->Server: HTTP GET HTML code
+Server->Browser: HTML code
+Browser->Server: HTTP GET main.css
+Server->Browser: main.css
+Browser->Server: HTTP GET main.js
+Server->Browser: main.js
+

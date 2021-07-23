@@ -1,0 +1,7 @@
+title Single Page App Post Submission
+
+note over Browser: new note is submitted
+note over Browser: Browser blocks normal form submission,
+note over Browser:pushes new note as text onto HTML element list stack
+note over Browser: sends note as JSON file
+Browser->Server: HTTP POST new note.JSON

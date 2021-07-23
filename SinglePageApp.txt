@@ -1,0 +1,12 @@
+title Single Page App
+
+Browser->Server: HTTP GET spa html
+Server->Browser: spa.html
+Browser->Server: HTTP GET main.css
+Server->Browser: css
+Browser->Server: HTTP GET spa.js
+Server->Browser: spa.js
+Browser->Server: HTTP GET data.json
+Server->Browser: data.json
+Browser->Server: HTTP GET favicon.ico
+Server->Browser: favicon.ico txt
