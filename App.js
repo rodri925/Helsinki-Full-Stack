@@ -1,56 +1,112 @@
-import React from 'react'
-const Header = (props) => {
-  return (
-    <>
-      <h1>{props.title}</h1>
-    </>
-  )
-}
+import React, { useState } from 'react'
 
-const Content = (props) => {
-  return(
-    <>
-    <Part part = {props.part1} exercise = {props.exercise1}/>
-    <Part part = {props.part2} exercise = {props.exercise2}/>
-    <Part part = {props.part3} exercise = {props.exercise3}/>
-    </>
-  )
-}
+const Button = (props) => (
+  <button onClick={props.handleClick}>{props.text}</button>
+)
 
-const Part = (props) => {
-  return(
-    <>
-    <p>{props.part} {props.exercise}</p>
-    </>
-  )
-}
-
-const Total = (props) => {
-  return(
-    <>
-    <p>Number of Exercises {props.num1 + props.num2 + props.num3}</p>
-    </>
-  )
-}
-
-const App = () => {
-  const course = 'Half Stack application development'
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
-    
+const StatisticLine = (props) => {
+  if(props.text == "good") {
     return(
       <>
-      <Header title = {course} />
-      <Content part1 = {part1} part2 = {part2} part3 = {part3}
-                exercise1 = {exercises1} exercise2 = {exercises2} 
-                exercise3 = {exercises3}     />
-      <Total num1 = {exercises1} num2 = {exercises2} num3 = {exercises3} />
+        <tr>
+        <td>good </td> <td> {props.good}</td>
+        </tr>
       </>
     )
   }
+  if(props.text == "neutral") {
+    return(
+      <>
+        <tr>
+        <td>neutral </td> <td> {props.neutral}</td>
+        </tr>
+      </>
+    )
+  }
+  if(props.text == "bad") {
+    return(
+      <>
+        <tr>
+        <td>bad </td> <td> {props.bad}</td>
+        </tr>
+      </>
+    )
+  }
+  if(props.text == "all") {
+    return(
+      <>
+        <tr>
+        <td>all </td> <td> {props.good + props.neutral + props.bad}</td>
+        </tr>
+      </>
+    )
+  }
+  if(props.text == "average") {
+    return(
+      <>
+        <tr>
+        <td>average </td> <td> {(props.good - props.bad) / (props.good + props.neutral + props.bad)}</td>
+        </tr>
+      </>
+    )
+  }
+  if(props.text == "positive") {
+    return(
+      <>
+        <tr>
+        <td>positive </td> <td> {(props.good) / (props.good + props.neutral + props.bad) * 100}%</td>
+        </tr>
+      </>
+    )
+  }
+}
+
+const Statistics = (props) => {
+  if(props.good === 0 && props.neutral === 0 && props.bad === 0) {
+    return(
+      <div>
+        <p>
+          No feedback given
+        </p>
+      </div>
+    )
+  }
+  else {
+    return(
+  <div>
+      <StatisticLine text = "good" good = {props.good} neutral = {props.neutral} bad = {props.bad} />
+      <StatisticLine text = "neutral" good = {props.good} neutral = {props.neutral} bad = {props.bad} />
+      <StatisticLine text = "bad" good = {props.good} neutral = {props.neutral} bad = {props.bad} />
+      <StatisticLine text = "all" good = {props.good} neutral = {props.neutral} bad = {props.bad} />
+      <StatisticLine text = "average" good = {props.good} neutral = {props.neutral} bad = {props.bad} />
+      <StatisticLine text = "positive" good = {props.good} neutral = {props.neutral} bad = {props.bad} />
+      
+    </div>
+    )
+  }
+}
+
+const App = () => {
+  // save clicks of each button to its own state
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
+
+  const setToGood = (newValue) => setGood(newValue)
+  const setToNeutral = (newValue) => setNeutral(newValue)
+  const setToBad = (newValue) => setBad(newValue)
+
+
+  return (
+    <div>
+    <h1>give feedback</h1>
+      <Button handleClick = {() => setToGood(good + 1)} text = "good"  />
+      <Button handleClick = {() => setToNeutral(neutral + 1)} text = "neutral" />
+      <Button handleClick = {() => setToBad(bad + 1)} text = "bad" />
+      <h1>statistics</h1>
+      <Statistics good = {good} neutral = {neutral} bad = {bad} />
+    </div>
+  )
+}
 
 export default App
